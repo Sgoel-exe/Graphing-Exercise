@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Examples/Scenes/Straight Path.unity
+    guid: 961e5c44ce42f4904af01c748d8c043c
+  - enabled: 0
+    path: Assets/Examples/Scenes/Saw Path.unity
+    guid: 1993620993fc74fe9bb2ed0f054d27a5
+  - enabled: 0
+    path: Assets/Examples/Scenes/Sine Path.unity
+    guid: a4b824760bd5a4e2aad0c5df299e231d
+  - enabled: 0
+    path: Assets/Examples/Scenes/Follow Target.unity
+    guid: cb17df02e2a8446ebacabfa428273d40
+  - enabled: 0
+    path: Assets/Examples/Scenes/Intersect.unity
+    guid: 9cd1fdae3713c473db7cacdde31c2c16
+  - enabled: 0
+    path: Assets/Examples/Scenes/Ricochet Path.unity
+    guid: 77cdc01a5d9cf44b2ad46bcd107e4f92
+  m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
