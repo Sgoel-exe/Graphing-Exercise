@@ -5,52 +5,54 @@ using UnityEngine;
 
 public class IntersectTargetScriopt : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private float slope = 0f;
-    private float yIntercept = 0f;
+    private float startX;
+    private float startY;
+    private float endX;
+    private float endY;
 
-    private float speed = 0.05f; 
-    private float x = 0f;
-    private float curTime = 0f;
-    private bool ShouldAdd = true;
+    // Start is called before the first frame update
     void Start()
     {
-        randomize();
-        if(x >= 0)
-        {
-            ShouldAdd = false;
-        }
+        startX = Random.Range(-5, 5);
+        startY = Random.Range(-3, 3);
+        Vector2 pos = Random.Range(1f,5f) * Random.onUnitSphere;
+        setEndPoints(pos);
+        transform.position = new Vector3(startX, startY, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(curTime >= speed)
+           this.transform.Translate(new Vector3(endX, endY, 0) * Time.deltaTime);
+    }
+
+    void setEndPoints(Vector2 onUnitSphere)
+    {
+        if(startX  > 0)
         {
-            transform.position = new Vector2(line_func(x), x);
-            x = ShouldAdd ? x + speed : x - speed;
-            curTime = 0f;
+            endX = - Mathf.Abs(onUnitSphere.x);
         }
         else
         {
-            curTime += Time.deltaTime;
+            endX = Mathf.Abs(onUnitSphere.x);
         }
-        
-        
+        if (startY > 0)
+        {
+            endY = -Mathf.Abs(onUnitSphere.y);
+        }
+        else
+        {
+            endY = Mathf.Abs(onUnitSphere.y);
+        }
     }
 
-    float line_func(float x)
+    public Vector2 getStartPoint()
     {
-        return slope * x + yIntercept;
+        return new Vector2(startX, startY);
     }
 
-    void randomize()
+    public Vector2 getEndPoint()
     {
-        float y = Random.Range(-3f, 3f);
-        x = Random.Range(-5f, 5f);
-        transform.position = new Vector2(x, y);
-        slope = Random.Range(0f, 360f);
-        slope = Mathf.Tan(slope * Mathf.Deg2Rad);
-        yIntercept = y - slope * x;
+        return new Vector2(endX, endY);
     }
 }
