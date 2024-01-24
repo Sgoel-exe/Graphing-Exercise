@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArrowControllerScript : MonoBehaviour
 {
     public Transform[] arrows;
+    private float[] velocities;
     public IntersectTargetScriopt target;
     // Start is called before the first frame update
     void Start()
@@ -16,9 +17,9 @@ public class ArrowControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (Transform arrow in arrows)
+        for (int i = 0; i < arrows.Length; i++)
         {
-            arrow.Translate(Vector3.forward * Time.deltaTime);
+            arrows[i].Translate(Vector3.forward * velocities[i] * Time.deltaTime);
         }
         
     }
@@ -36,14 +37,16 @@ public class ArrowControllerScript : MonoBehaviour
     {
         Vector2 targetStart = target.getStartPoint();
         Vector2 targetEnd = target.getEndPoint();
+        velocities = new float[arrows.Length];
 
-        float t = 0.166666f;
+        float t = 1f/6f;
 
-        foreach (Transform arrow in arrows)
+        for (int i = 0; i < arrows.Length; i++)
         {
             Vector2 intersectPoint = Vector2.Lerp(targetStart, targetEnd, t);
-            arrow.LookAt(intersectPoint);
-            t += 0.166666f;
+            arrows[i].LookAt(intersectPoint);
+            velocities[i] = Vector2.Distance(arrows[i].position, intersectPoint) / (i+1);
+            t += (1f/6f);
         }
         
     }
