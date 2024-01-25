@@ -12,6 +12,7 @@ public class IntersectTargetScriopt : MonoBehaviour
 
     private float distance;
     private float velocity;
+    private Vector3 direction;
 
     // Start is called before the first frame update
     void Start()
@@ -20,18 +21,22 @@ public class IntersectTargetScriopt : MonoBehaviour
         startX = Random.Range(-5, 5);
         startY = Random.Range(-3, 3);
         //Make sure the end point is not too close to the start point
-        Vector2 pos = Random.Range(1f,4f) * Random.onUnitSphere;
-        setEndPoints(pos);
+        Vector2 pos = Random.Range(1f,4f) * Random.insideUnitCircle.normalized;
+        //setEndPoints(pos);
+        endX = pos.x;
+        endY = pos.y;
 
+        Vector3 start = new Vector3(startX, startY, 0);
+        Vector3 end = new Vector3(endX, endY, 0);
+
+        direction = (end - start).normalized;
         //Move the target to the start point and look at the end point
-        transform.position = new Vector3(startX, startY, 0);
-        transform.LookAt(new Vector3(endX, endY, 0));
+        transform.position = start;
+
         Debug.Log("Start: " + startX + " " + startY + " End: " + endX + " " + endY);
-        float slope = (endY - startY) / (endX - startX);
-        Debug.Log("Slope: " + slope);
 
         //Calculate the velocity based on the distance between the start and end points
-        distance = Vector2.Distance(new Vector2(startX, startY), new Vector2(endX, endY));
+        distance = Vector2.Distance(start, end);
         velocity = distance / 6f;
         
         //Debug.Log(velocity);
@@ -41,7 +46,7 @@ public class IntersectTargetScriopt : MonoBehaviour
     void Update()
     {
         //Works about 65% of the time
-        transform.Translate(-1f * Time.deltaTime * velocity * transform.right);
+        transform.Translate(Time.deltaTime * velocity * direction);
     }
 
     void setEndPoints(Vector2 onUnitSphere)
